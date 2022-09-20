@@ -1,14 +1,17 @@
 package com.whatap.productservice.domain;
 
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Entity
+@Table(name = "products")
 public class Product {
 
     @Id
@@ -17,15 +20,17 @@ public class Product {
 
     private String name;
     private String description;
+    private LocalDateTime createdAt;
 
     protected Product() {
 
     }
 
     @Builder
-    private Product(Long id, String name, String description) {
+    private Product(Long id, String name, String description, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.createdAt = createdAt;
     }
 }
