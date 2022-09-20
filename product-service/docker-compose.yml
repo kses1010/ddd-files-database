@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  database-product:
+    image: mysql:8.0
+    container_name: product-db
+    restart: unless-stopped
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=tiger
+      - MYSQL_USER=whatap
+      - MYSQL_DATABASE=product
+
+    volumes:
+      - ./src/main/resources/db/migration/V1__init.sql:/docker-entrypoint-initdb.d/V1__init.sql
+      - product-db:/var/lib/mysql
+
+volumes:
+  product-db:
