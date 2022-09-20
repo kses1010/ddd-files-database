@@ -10,7 +10,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=tiger
       - MYSQL_USER=whatap
-      - MYSQL_DATABASE=order
+      - MYSQL_DATABASE=order-db
 
     volumes:
       - ./src/main/resources/db/migration/V1__init.sql:/docker-entrypoint-initdb.d/V1__init.sql
