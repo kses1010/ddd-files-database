@@ -1,6 +1,6 @@
 START TRANSACTION;
 
-CREATE TABLE product
+CREATE TABLE products
 (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(255) NULL COMMENT '상품 이름',
