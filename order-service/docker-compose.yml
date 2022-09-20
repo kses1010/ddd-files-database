@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  database-product:
+  database-order:
     image: mysql:8.0
     container_name: order-db
     restart: unless-stopped
@@ -17,4 +17,4 @@ services:
       - order-db:/var/lib/mysql
 
 volumes:
-  product-db:
+  order-db:
