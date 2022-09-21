@@ -42,6 +42,9 @@ public class GlobalExceptionHandler {
             ErrorCode.MISSING_REQUEST_PARAMETER_VALUE.getHttpStatus());
     }
 
+    /**
+     * @ModelAttribute 으로 binding error 발생시 BindException 발생 또는 Validation 하기 전 Bean Property가 Bind에 실패해도 발생
+     */
     @ExceptionHandler(BindException.class)
     protected ResponseEntity<ErrorResponse> handleBindException(BindException e) {
         log.error("handleBindException", e);

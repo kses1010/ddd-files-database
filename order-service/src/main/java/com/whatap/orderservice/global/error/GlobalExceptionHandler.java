@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -39,6 +40,17 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(new ErrorResponse(ErrorCode.MISSING_REQUEST_PARAMETER_VALUE),
             ErrorCode.MISSING_REQUEST_PARAMETER_VALUE.getHttpStatus());
+    }
+
+    /**
+     * @ModelAttribute 으로 binding error 발생시 BindException 발생 또는 Validation 하기 전 Bean Property가 Bind에 실패해도 발생
+     */
+    @ExceptionHandler(BindException.class)
+    protected ResponseEntity<ErrorResponse> handleBindException(BindException e) {
+        log.error("handleBindException", e);
+
+        return new ResponseEntity<>(new ErrorResponse(ErrorCode.INVALID_REQUEST_PARAMETER),
+            ErrorCode.INVALID_REQUEST_PARAMETER.getHttpStatus());
     }
 
     /**
