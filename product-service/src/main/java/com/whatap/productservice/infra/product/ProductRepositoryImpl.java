@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
 
-    private final ProductSpringDataRepository productSpringDataRepository;
+    private final ProductEntitySpringDataRepository productEntitySpringDataRepository;
 
     @Override
-    public void save(Product product) {
-        productSpringDataRepository.save(product);
+    public Product save(Product product) {
+        return productEntitySpringDataRepository.save(product.toEntity()).toDomain();
     }
 }

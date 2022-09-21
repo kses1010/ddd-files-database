@@ -1,5 +1,6 @@
 package com.whatap.productservice.domain.product;
 
+import com.whatap.productservice.infra.product.ProductEntity;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +25,15 @@ public class Product {
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public ProductEntity toEntity() {
+        return ProductEntity.builder()
+            .name(name)
+            .description(description)
+            .createdAt(createdAt)
+            .updatedAt(updatedAt)
+            .build();
     }
 
     public static Product createProduct(String name, String description) {
