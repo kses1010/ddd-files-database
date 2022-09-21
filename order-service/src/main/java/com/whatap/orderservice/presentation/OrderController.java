@@ -1,9 +1,11 @@
 package com.whatap.orderservice.presentation;
 
 import com.whatap.orderservice.application.OrderCreateAplService;
+import com.whatap.orderservice.application.OrderDeleteAplService;
 import com.whatap.orderservice.application.OrderReadAplService;
 import com.whatap.orderservice.application.OrderUpdateAplService;
 import com.whatap.orderservice.application.command.OrderCreateCommand;
+import com.whatap.orderservice.application.command.OrderDeleteCommand;
 import com.whatap.orderservice.application.command.OrderUpdateCommand;
 import com.whatap.orderservice.application.query.OrderDetailQuery;
 import com.whatap.orderservice.application.query.OrderListQuery;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +39,7 @@ public class OrderController {
     private final OrderCreateAplService orderCreateAplService;
     private final OrderReadAplService orderReadAplService;
     private final OrderUpdateAplService orderUpdateAplService;
+    private final OrderDeleteAplService orderDeleteAplService;
 
     @PostMapping("")
     public OrderCreateResponse createOrder(@RequestBody @Valid OrderCreateRequest request) {
@@ -71,5 +75,10 @@ public class OrderController {
 
         Order order = orderUpdateAplService.updateOrder(new OrderUpdateCommand(id, request.getProductId()));
         return new OrderResponse(order);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Long id) {
+        orderDeleteAplService.deleteOrder(new OrderDeleteCommand(id));
     }
 }
