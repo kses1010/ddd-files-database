@@ -14,7 +14,7 @@ public class ProductCreateAplService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void createProduct(ProductCreateCommand command) {
+    public Product createProduct(ProductCreateCommand command) {
         Product product = Product.createProduct(command.getName(), command.getDescription());
         productRepository.save(product);
     }

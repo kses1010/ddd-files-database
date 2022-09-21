@@ -2,7 +2,9 @@ package com.whatap.productservice.presentation;
 
 import com.whatap.productservice.application.product.ProductCreateAplService;
 import com.whatap.productservice.application.product.command.ProductCreateCommand;
+import com.whatap.productservice.domain.product.Product;
 import com.whatap.productservice.presentation.request.ProductCreateRequest;
+import com.whatap.productservice.presentation.response.ProductCreateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +19,9 @@ public class ProductController {
     private final ProductCreateAplService productCreateAplService;
 
     @PostMapping("")
-    public void createProduct(@RequestBody ProductCreateRequest request) {
-        productCreateAplService.createProduct(new ProductCreateCommand(request.getName(), request.getDescription()));
+    public ProductCreateResponse createProduct(@RequestBody ProductCreateRequest request) {
+        Product product = productCreateAplService.createProduct(
+            new ProductCreateCommand(request.getName(), request.getDescription()));
+        return new ProductCreateResponse(product);
     }
 }
