@@ -7,15 +7,15 @@ import lombok.Setter;
 @Setter
 public class PageQuery {
 
-    private Integer page;
-    private Integer limit;
+    private int page;
+    private int limit;
 
     public PageQuery() {
     }
 
-    public PageQuery(Integer page, Integer limit) {
-        this.page = page == null ? 1 : page;
-        this.limit = limit == null ? 10 : limit;
+    public PageQuery(int page, int limit) {
+        this.page = page;
+        this.limit = limit;
     }
 
     public int offset() {

@@ -7,19 +7,21 @@ import com.whatap.productservice.application.product.query.ProductDetailQuery;
 import com.whatap.productservice.application.product.query.ProductListQuery;
 import com.whatap.productservice.domain.product.Product;
 import com.whatap.productservice.global.pagination.PageQuery;
+import com.whatap.productservice.global.pagination.PageQueryDto;
 import com.whatap.productservice.presentation.request.ProductCreateRequest;
 import com.whatap.productservice.presentation.response.ProductCreateResponse;
 import com.whatap.productservice.presentation.response.ProductDetailResponse;
 import com.whatap.productservice.presentation.response.ProductResponse;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -51,11 +53,9 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public List<ProductResponse> getProducts(
-        @RequestParam(value = "page", required = false) int page,
-        @RequestParam(value = "limit", required = false) int limit) {
-
-        return productReadAplService.getProducts(new ProductListQuery(new PageQuery(page, limit))).stream()
+    public List<ProductResponse> getProducts(@ModelAttribute @Valid PageQueryDto pageQueryDto) {
+        PageQuery pageQuery = new PageQuery(pageQueryDto.getPage(), pageQueryDto.getLimit());
+        return productReadAplService.getProducts(new ProductListQuery(pageQuery)).stream()
             .map(ProductResponse::new)
             .collect(Collectors.toList());
     }
