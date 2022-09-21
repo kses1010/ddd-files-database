@@ -2,13 +2,16 @@ package com.whatap.orderservice.presentation;
 
 import com.whatap.orderservice.application.OrderCreateAplService;
 import com.whatap.orderservice.application.OrderReadAplService;
+import com.whatap.orderservice.application.OrderUpdateAplService;
 import com.whatap.orderservice.application.command.OrderCreateCommand;
+import com.whatap.orderservice.application.command.OrderUpdateCommand;
 import com.whatap.orderservice.application.query.OrderDetailQuery;
 import com.whatap.orderservice.application.query.OrderListQuery;
 import com.whatap.orderservice.domain.order.Order;
 import com.whatap.orderservice.global.pagination.PageQuery;
 import com.whatap.orderservice.global.pagination.PageQueryDto;
 import com.whatap.orderservice.presentation.request.OrderCreateRequest;
+import com.whatap.orderservice.presentation.request.OrderUpdateRequest;
 import com.whatap.orderservice.presentation.response.OrderCreateResponse;
 import com.whatap.orderservice.presentation.response.OrderDetailResponse;
 import com.whatap.orderservice.presentation.response.OrderResponse;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +35,7 @@ public class OrderController {
 
     private final OrderCreateAplService orderCreateAplService;
     private final OrderReadAplService orderReadAplService;
+    private final OrderUpdateAplService orderUpdateAplService;
 
     @PostMapping("")
     public OrderCreateResponse createOrder(@RequestBody @Valid OrderCreateRequest request) {
@@ -57,5 +62,14 @@ public class OrderController {
         return orderReadAplService.getOrders(new OrderListQuery(pageQuery)).stream()
             .map(OrderResponse::new)
             .collect(Collectors.toList());
+    }
+
+    @PutMapping("/{id}")
+    public OrderResponse updateOrder(
+        @PathVariable Long id,
+        @RequestBody @Valid OrderUpdateRequest request) {
+
+        Order order = orderUpdateAplService.updateOrder(new OrderUpdateCommand(id, request.getProductId()));
+        return new OrderResponse(order);
     }
 }
