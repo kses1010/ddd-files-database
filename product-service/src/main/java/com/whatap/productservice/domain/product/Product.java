@@ -33,11 +33,12 @@ public class Product {
     }
 
     @Builder
-    private Product(Long id, String name, String description, LocalDateTime createdAt) {
+    private Product(Long id, String name, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public static Product createProduct(String name, String description) {
