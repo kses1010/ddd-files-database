@@ -40,4 +40,9 @@ public class ProductRepositoryImpl implements ProductRepository {
             .map(ProductEntity::toDomain)
             .collect(Collectors.toList());
     }
+
+    @Override
+    public void delete(Product product) {
+        productEntitySpringDataRepository.delete(product.toEntity());
+    }
 }

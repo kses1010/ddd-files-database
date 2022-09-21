@@ -65,7 +65,7 @@ public class ProductController {
             .collect(Collectors.toList());
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ProductDetailResponse updateProduct(
         @PathVariable Long id,
         @RequestBody @Valid ProductUpdateRequest request) {

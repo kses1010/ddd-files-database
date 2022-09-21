@@ -13,4 +13,6 @@ public interface ProductRepository {
     List<Product> findAll();
 
     List<Product> findAll(PageQuery pageQuery);
+
+    void delete(Product product);
 }
