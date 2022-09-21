@@ -21,7 +21,7 @@ public class ProductReadAplService {
         return productRepository.findById(query.getId()).orElseThrow(ProductNotFoundException::new);
     }
 
-    public List<Product> getProducts() {
+    public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 

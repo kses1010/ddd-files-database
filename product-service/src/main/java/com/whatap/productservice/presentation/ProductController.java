@@ -4,7 +4,9 @@ import com.whatap.productservice.application.product.ProductCreateAplService;
 import com.whatap.productservice.application.product.ProductReadAplService;
 import com.whatap.productservice.application.product.command.ProductCreateCommand;
 import com.whatap.productservice.application.product.query.ProductDetailQuery;
+import com.whatap.productservice.application.product.query.ProductListQuery;
 import com.whatap.productservice.domain.product.Product;
+import com.whatap.productservice.global.pagination.PageQuery;
 import com.whatap.productservice.presentation.request.ProductCreateRequest;
 import com.whatap.productservice.presentation.response.ProductCreateResponse;
 import com.whatap.productservice.presentation.response.ProductDetailResponse;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -42,7 +45,17 @@ public class ProductController {
 
     @GetMapping("/all")
     public List<ProductResponse> getAllProducts() {
-        return productReadAplService.getProducts().stream()
+        return productReadAplService.getAllProducts().stream()
+            .map(ProductResponse::new)
+            .collect(Collectors.toList());
+    }
+
+    @GetMapping("")
+    public List<ProductResponse> getProducts(
+        @RequestParam(value = "page", required = false) int page,
+        @RequestParam(value = "limit", required = false) int limit) {
+
+        return productReadAplService.getProducts(new ProductListQuery(new PageQuery(page, limit))).stream()
             .map(ProductResponse::new)
             .collect(Collectors.toList());
     }
