@@ -26,6 +26,6 @@ public class ProductReadAplService {
     }
 
     public List<Product> getProducts(ProductListQuery query) {
-        return null;
+        return productRepository.findAll(query.getPageQuery());
     }
 }
