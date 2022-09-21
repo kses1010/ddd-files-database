@@ -17,6 +17,7 @@ public class OrderReadAplService {
 
     private final OrderRepository orderRepository;
 
+    // TODO: 2022/09/22 주문한 상품의 이름, 설명을 가져와야한다.
     public Order getOrderDetail(OrderDetailQuery query) {
         return orderRepository.findById(query.getId()).orElseThrow(OrderNotFoundException::new);
     }
