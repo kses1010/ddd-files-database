@@ -43,4 +43,10 @@ public class Product {
             .createdAt(LocalDateTime.now())
             .build();
     }
+
+    public void update(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.updatedAt = LocalDateTime.now();
+    }
 }
