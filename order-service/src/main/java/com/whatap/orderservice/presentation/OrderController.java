@@ -4,7 +4,10 @@ import com.whatap.orderservice.application.OrderCreateAplService;
 import com.whatap.orderservice.application.OrderReadAplService;
 import com.whatap.orderservice.application.command.OrderCreateCommand;
 import com.whatap.orderservice.application.query.OrderDetailQuery;
+import com.whatap.orderservice.application.query.OrderListQuery;
 import com.whatap.orderservice.domain.order.Order;
+import com.whatap.orderservice.global.pagination.PageQuery;
+import com.whatap.orderservice.global.pagination.PageQueryDto;
 import com.whatap.orderservice.presentation.request.OrderCreateRequest;
 import com.whatap.orderservice.presentation.response.OrderCreateResponse;
 import com.whatap.orderservice.presentation.response.OrderDetailResponse;
@@ -14,6 +17,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,6 +47,14 @@ public class OrderController {
     @GetMapping("/all")
     public List<OrderResponse> getAllOrders() {
         return orderReadAplService.getAllOrders().stream()
+            .map(OrderResponse::new)
+            .collect(Collectors.toList());
+    }
+
+    @GetMapping("")
+    public List<OrderResponse> getOrders(@ModelAttribute @Valid PageQueryDto pageQueryDto) {
+        PageQuery pageQuery = new PageQuery(pageQueryDto.getPage(), pageQueryDto.getLimit());
+        return orderReadAplService.getOrders(new OrderListQuery(pageQuery)).stream()
             .map(OrderResponse::new)
             .collect(Collectors.toList());
     }
