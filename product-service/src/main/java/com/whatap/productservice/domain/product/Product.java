@@ -25,6 +25,9 @@ public class Product {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime updatedAt;
+
     protected Product() {
 
     }
@@ -35,5 +38,13 @@ public class Product {
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
+    }
+
+    public static Product createProduct(String name, String description) {
+        return Product.builder()
+            .name(name)
+            .description(description)
+            .createdAt(LocalDateTime.now())
+            .build();
     }
 }
