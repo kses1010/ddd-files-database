@@ -15,6 +15,7 @@ public enum ErrorCode implements ErrorObject {
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "서비스 오류입니다."),
 
     // order
+    ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "주문을 찾을 수 없습니다."),
 
     // product
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다."),
