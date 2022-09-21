@@ -1,9 +1,11 @@
 package com.whatap.productservice.presentation;
 
 import com.whatap.productservice.application.product.ProductCreateAplService;
+import com.whatap.productservice.application.product.ProductDeleteAplService;
 import com.whatap.productservice.application.product.ProductReadAplService;
 import com.whatap.productservice.application.product.ProductUpdateAplService;
 import com.whatap.productservice.application.product.command.ProductCreateCommand;
+import com.whatap.productservice.application.product.command.ProductDeleteCommand;
 import com.whatap.productservice.application.product.command.ProductUpdateCommand;
 import com.whatap.productservice.application.product.query.ProductDetailQuery;
 import com.whatap.productservice.application.product.query.ProductListQuery;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +39,7 @@ public class ProductController {
     private final ProductCreateAplService productCreateAplService;
     private final ProductReadAplService productReadAplService;
     private final ProductUpdateAplService productUpdateAplService;
+    private final ProductDeleteAplService productDeleteAplService;
 
     @PostMapping("")
     public ProductCreateResponse createProduct(@RequestBody @Valid ProductCreateRequest request) {
@@ -73,5 +77,10 @@ public class ProductController {
         Product product = productUpdateAplService.updateProduct(
             new ProductUpdateCommand(id, request.getName(), request.getDescription()));
         return new ProductDetailResponse(product);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productDeleteAplService.deleteProduct(new ProductDeleteCommand(id));
     }
 }
