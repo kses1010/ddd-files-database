@@ -2,10 +2,12 @@ package com.whatap.productservice.infra.product;
 
 import com.whatap.productservice.domain.product.Product;
 import com.whatap.productservice.domain.product.ProductRepository;
+import com.whatap.productservice.global.pagination.PageQuery;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 @RequiredArgsConstructor
@@ -27,6 +29,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public List<Product> findAll() {
         return productEntitySpringDataRepository.findAll().stream()
+            .map(ProductEntity::toDomain)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Product> findAll(PageQuery pageQuery) {
+        PageRequest pageRequest = PageRequest.of(pageQuery.offset(), pageQuery.getLimit());
+        return productEntitySpringDataRepository.findAll(pageRequest).stream()
             .map(ProductEntity::toDomain)
             .collect(Collectors.toList());
     }
