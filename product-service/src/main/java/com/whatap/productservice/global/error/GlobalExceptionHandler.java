@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -23,7 +24,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
         MethodArgumentNotValidException e) {
-        log.info("handleMethodArgumentNotValidException", e);
+        log.error("handleMethodArgumentNotValidException", e);
 
         return new ResponseEntity<>(new ErrorResponse(ErrorCode.INVALID_PARAMETER),
             ErrorCode.INVALID_PARAMETER.getHttpStatus());
@@ -35,10 +36,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     protected ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
         MissingServletRequestParameterException e) {
-        log.info("MissingServletRequestParameterException", e);
+        log.error("MissingServletRequestParameterException", e);
 
         return new ResponseEntity<>(new ErrorResponse(ErrorCode.MISSING_REQUEST_PARAMETER_VALUE),
             ErrorCode.MISSING_REQUEST_PARAMETER_VALUE.getHttpStatus());
+    }
+
+    @ExceptionHandler(BindException.class)
+    protected ResponseEntity<ErrorResponse> handleBindException(BindException e) {
+        log.error("handleBindException", e);
+
+        return new ResponseEntity<>(new ErrorResponse(ErrorCode.INVALID_REQUEST_PARAMETER),
+            ErrorCode.INVALID_REQUEST_PARAMETER.getHttpStatus());
     }
 
     /**
@@ -47,7 +56,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(
         MethodArgumentTypeMismatchException e) {
-        log.info("handleMethodArgumentTypeMismatchException", e);
+        log.error("handleMethodArgumentTypeMismatchException", e);
 
         return new ResponseEntity<>(new ErrorResponse(ErrorCode.INVALID_REQUEST_PARAMETER),
             ErrorCode.INVALID_REQUEST_PARAMETER.getHttpStatus());
@@ -59,7 +68,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(
         HttpMessageNotReadableException e) {
-        log.info("handleHttpMessageNotReadableException", e);
+        log.error("handleHttpMessageNotReadableException", e);
 
         return new ResponseEntity<>(new ErrorResponse(ErrorCode.INVALID_POST), ErrorCode.INVALID_POST.getHttpStatus());
     }
@@ -70,7 +79,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(
         HttpRequestMethodNotSupportedException e) {
-        log.info("handleHttpRequestMethodNotSupportedException", e);
+        log.error("handleHttpRequestMethodNotSupportedException", e);
 
         return new ResponseEntity<>(new ErrorResponse(ErrorCode.METHOD_NOT_ALLOWED),
             ErrorCode.METHOD_NOT_ALLOWED.getHttpStatus());
