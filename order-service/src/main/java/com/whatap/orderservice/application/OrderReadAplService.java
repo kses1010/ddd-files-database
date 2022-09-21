@@ -26,6 +26,6 @@ public class OrderReadAplService {
     }
 
     public List<Order> getOrders(OrderListQuery query) {
-
+        return orderRepository.findAll(query.getPageQuery());
     }
 }
