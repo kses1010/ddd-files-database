@@ -39,4 +39,8 @@ public class Order {
             .updatedAt(updatedAt)
             .build();
     }
+
+    public void changeProduct(Long productId) {
+        this.productId = productId;
+    }
 }
