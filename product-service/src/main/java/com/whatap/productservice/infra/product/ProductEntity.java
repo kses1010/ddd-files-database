@@ -9,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 @Entity
 @Table(name = "products")
 public class ProductEntity {
@@ -43,6 +45,12 @@ public class ProductEntity {
     }
 
     public Product toDomain() {
-        return new Product(id, name, description, createdAt, updatedAt);
+        return Product.builder()
+            .id(id)
+            .name(name)
+            .description(description)
+            .createdAt(createdAt)
+            .updatedAt(updatedAt)
+            .build();
     }
 }

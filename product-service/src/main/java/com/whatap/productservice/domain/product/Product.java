@@ -3,9 +3,11 @@ package com.whatap.productservice.domain.product;
 import com.whatap.productservice.infra.product.ProductEntity;
 import java.time.LocalDateTime;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public class Product {
 
     private Long id;
