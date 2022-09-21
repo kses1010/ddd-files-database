@@ -13,6 +13,11 @@ public enum ErrorCode implements ErrorObject {
     MISSING_REQUEST_PARAMETER_VALUE(HttpStatus.BAD_REQUEST, "올바르지 않은 요청입니다. 요청 정보를 확인 후 다시 시도해주세요."),
     INVALID_REQUEST_PARAMETER(HttpStatus.BAD_REQUEST, "올바르지 않은 입력 값입니다."),
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "서비스 오류입니다."),
+
+    // order
+
+    // product
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다."),
     ;
 
     private final HttpStatus httpStatus;

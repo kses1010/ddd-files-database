@@ -1,4 +1,4 @@
-package com.whatap.orderservice.domain;
+package com.whatap.orderservice.domain.order;
 
 import java.time.LocalDateTime;
 import lombok.Builder;
