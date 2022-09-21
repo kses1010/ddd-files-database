@@ -8,6 +8,9 @@ import com.whatap.productservice.domain.product.Product;
 import com.whatap.productservice.presentation.request.ProductCreateRequest;
 import com.whatap.productservice.presentation.response.ProductCreateResponse;
 import com.whatap.productservice.presentation.response.ProductDetailResponse;
+import com.whatap.productservice.presentation.response.ProductResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,5 +38,12 @@ public class ProductController {
     public ProductDetailResponse getProductDetail(@PathVariable Long id) {
         Product product = productReadAplService.getProductDetail(new ProductDetailQuery(id));
         return new ProductDetailResponse(product);
+    }
+
+    @GetMapping("/all")
+    public List<ProductResponse> getAllProducts() {
+        return productReadAplService.getProducts().stream()
+            .map(ProductResponse::new)
+            .collect(Collectors.toList());
     }
 }
