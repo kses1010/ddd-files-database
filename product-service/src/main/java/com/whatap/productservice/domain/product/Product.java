@@ -1,4 +1,4 @@
-package com.whatap.productservice.domain;
+package com.whatap.productservice.domain.product;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
