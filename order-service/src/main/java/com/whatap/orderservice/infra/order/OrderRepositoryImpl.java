@@ -2,10 +2,12 @@ package com.whatap.orderservice.infra.order;
 
 import com.whatap.orderservice.domain.order.Order;
 import com.whatap.orderservice.domain.order.OrderRepository;
+import com.whatap.orderservice.global.pagination.PageQuery;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 @RequiredArgsConstructor
@@ -30,4 +32,13 @@ public class OrderRepositoryImpl implements OrderRepository {
             .map(OrderEntity::toDomain)
             .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Order> findAll(PageQuery pageQuery) {
+        PageRequest pageRequest = PageRequest.of(pageQuery.offset(), pageQuery.getLimit());
+        return orderEntitySpringDataRepository.findAll(pageRequest).stream()
+            .map(OrderEntity::toDomain)
+            .collect(Collectors.toList());
+    }
+
 }
