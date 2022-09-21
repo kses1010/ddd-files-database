@@ -31,6 +31,7 @@ public class Product {
 
     public ProductEntity toEntity() {
         return ProductEntity.builder()
+            .id(id)
             .name(name)
             .description(description)
             .createdAt(createdAt)
