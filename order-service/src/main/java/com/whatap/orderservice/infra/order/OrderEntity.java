@@ -1,5 +1,6 @@
 package com.whatap.orderservice.infra.order;
 
+import com.whatap.orderservice.domain.order.Order;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,5 +37,14 @@ public class OrderEntity {
         this.productId = productId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public Order toDomain() {
+        return Order.builder()
+            .id(id)
+            .productId(productId)
+            .createdAt(createdAt)
+            .updatedAt(updatedAt)
+            .build();
     }
 }
