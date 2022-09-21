@@ -19,6 +19,8 @@ public class OrderEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long productId;
+
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime createdAt;
 
@@ -29,8 +31,9 @@ public class OrderEntity {
     }
 
     @Builder
-    private OrderEntity(Long id, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private OrderEntity(Long id, Long productId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
+        this.productId = productId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

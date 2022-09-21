@@ -8,6 +8,7 @@ import lombok.Getter;
 public class Order {
 
     private Long id;
+    private Long productId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -15,8 +16,9 @@ public class Order {
     }
 
     @Builder
-    private Order(Long id, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private Order(Long id, Long productId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
+        this.productId = productId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
