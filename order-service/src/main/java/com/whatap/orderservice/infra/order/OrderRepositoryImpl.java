@@ -41,4 +41,8 @@ public class OrderRepositoryImpl implements OrderRepository {
             .collect(Collectors.toList());
     }
 
+    @Override
+    public void delete(Order order) {
+        orderEntitySpringDataRepository.delete(order.toEntity());
+    }
 }

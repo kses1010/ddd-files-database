@@ -13,4 +13,6 @@ public interface OrderRepository {
     List<Order> findAll();
 
     List<Order> findAll(PageQuery pageQuery);
+
+    void delete(Order order);
 }
