@@ -8,6 +8,9 @@ import com.whatap.orderservice.domain.order.Order;
 import com.whatap.orderservice.presentation.request.OrderCreateRequest;
 import com.whatap.orderservice.presentation.response.OrderCreateResponse;
 import com.whatap.orderservice.presentation.response.OrderDetailResponse;
+import com.whatap.orderservice.presentation.response.OrderResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,5 +38,12 @@ public class OrderController {
     public OrderDetailResponse getOrderDetail(@PathVariable Long id) {
         Order order = orderReadAplService.getOrderDetail(new OrderDetailQuery(id));
         return new OrderDetailResponse(order);
+    }
+
+    @GetMapping("/all")
+    public List<OrderResponse> getAllOrders() {
+        return orderReadAplService.getAllOrders().stream()
+            .map(OrderResponse::new)
+            .collect(Collectors.toList());
     }
 }
