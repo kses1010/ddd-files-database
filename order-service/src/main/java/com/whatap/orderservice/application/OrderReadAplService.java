@@ -1,6 +1,7 @@
 package com.whatap.orderservice.application;
 
 import com.whatap.orderservice.application.query.OrderDetailQuery;
+import com.whatap.orderservice.application.query.OrderListQuery;
 import com.whatap.orderservice.domain.order.Order;
 import com.whatap.orderservice.domain.order.OrderRepository;
 import com.whatap.orderservice.domain.order.exception.OrderNotFoundException;
@@ -22,5 +23,9 @@ public class OrderReadAplService {
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
+    }
+
+    public List<Order> getOrders(OrderListQuery query) {
+
     }
 }
