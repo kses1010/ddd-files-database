@@ -25,6 +25,7 @@ public class ProductRestTemplateService implements ProductService {
 
     @Override
     public ProductDetail getProductDetail(Long productId) {
+        log.info("상품 조회 = {}", productId);
         try {
             ProductResult productResult = restTemplate.getForObject(
                 "http://localhost:8082/products/" + productId,
@@ -44,6 +45,7 @@ public class ProductRestTemplateService implements ProductService {
 
     @Override
     public List<ProductDetail> getProducts(List<Long> productIds) {
+        log.info("상품 리스트 조회");
         try {
             ProductByOrdersResult productByOrdersResult = restTemplate.postForObject(
                 "http://localhost:8082/products/info",
