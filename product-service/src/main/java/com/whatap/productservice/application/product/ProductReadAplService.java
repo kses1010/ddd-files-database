@@ -31,6 +31,6 @@ public class ProductReadAplService {
     }
 
     public List<Product> getProducts(ProductListByOrdersQuery query) {
-
+        return productRepository.findAll(query.getIds());
     }
 }
