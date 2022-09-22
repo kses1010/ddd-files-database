@@ -19,6 +19,6 @@ public class PageQuery {
     }
 
     public int offset() {
-        return (page - 1) * limit;
+        return page - 1;
     }
 }
