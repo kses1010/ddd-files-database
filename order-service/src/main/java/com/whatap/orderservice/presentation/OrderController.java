@@ -11,6 +11,7 @@ import com.whatap.orderservice.application.query.OrderDetailQuery;
 import com.whatap.orderservice.application.query.OrderListQuery;
 import com.whatap.orderservice.domain.order.Order;
 import com.whatap.orderservice.domain.order.model.OrderDetail;
+import com.whatap.orderservice.domain.order.model.OrderSummary;
 import com.whatap.orderservice.global.pagination.PageQuery;
 import com.whatap.orderservice.global.pagination.PageQueryDto;
 import com.whatap.orderservice.presentation.request.OrderCreateRequest;
@@ -74,8 +75,9 @@ public class OrderController {
         @PathVariable Long id,
         @RequestBody @Valid OrderUpdateRequest request) {
 
-        Order order = orderUpdateAplService.updateOrder(new OrderUpdateCommand(id, request.getProductId()));
-        return new OrderResponse(order);
+        OrderSummary orderSummary = orderUpdateAplService.updateOrder(
+            new OrderUpdateCommand(id, request.getProductId()));
+        return new OrderResponse(orderSummary);
     }
 
     @DeleteMapping("/{id}")

@@ -4,6 +4,7 @@ import com.whatap.orderservice.application.command.OrderUpdateCommand;
 import com.whatap.orderservice.domain.order.Order;
 import com.whatap.orderservice.domain.order.OrderRepository;
 import com.whatap.orderservice.domain.order.exception.OrderNotFoundException;
+import com.whatap.orderservice.domain.order.model.OrderSummary;
 import com.whatap.orderservice.domain.order.model.ProductDetail;
 import com.whatap.orderservice.domain.order.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +19,12 @@ public class OrderUpdateAplService {
     private final OrderRepository orderRepository;
 
     @Transactional
-    public Order updateOrder(OrderUpdateCommand command) {
+    public OrderSummary updateOrder(OrderUpdateCommand command) {
         Order order = orderRepository.findById(command.getId()).orElseThrow(OrderNotFoundException::new);
         ProductDetail productDetail = productService.getProductDetail(command.getProductId());
 
         order.changeProduct(productDetail.getId());
-        return orderRepository.save(order);
+        orderRepository.save(order);
+        return OrderSummary.createExistProduct(order, productDetail);
     }
 }
