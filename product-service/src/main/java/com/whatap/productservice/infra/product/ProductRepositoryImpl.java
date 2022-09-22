@@ -42,6 +42,13 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public List<Product> findAll(List<Long> ids) {
+        return productEntitySpringDataRepository.findAllById(ids).stream()
+            .map(ProductEntity::toDomain)
+            .collect(Collectors.toList());
+    }
+
+    @Override
     public void delete(Product product) {
         productEntitySpringDataRepository.delete(product.toEntity());
     }
