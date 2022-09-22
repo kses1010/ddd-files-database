@@ -8,12 +8,15 @@ import com.whatap.productservice.application.product.command.ProductCreateComman
 import com.whatap.productservice.application.product.command.ProductDeleteCommand;
 import com.whatap.productservice.application.product.command.ProductUpdateCommand;
 import com.whatap.productservice.application.product.query.ProductDetailQuery;
+import com.whatap.productservice.application.product.query.ProductListByOrdersQuery;
 import com.whatap.productservice.application.product.query.ProductListQuery;
 import com.whatap.productservice.domain.product.Product;
 import com.whatap.productservice.global.pagination.PageQuery;
 import com.whatap.productservice.global.pagination.PageQueryDto;
+import com.whatap.productservice.presentation.request.ProductByOrdersRequest;
 import com.whatap.productservice.presentation.request.ProductCreateRequest;
 import com.whatap.productservice.presentation.request.ProductUpdateRequest;
+import com.whatap.productservice.presentation.response.ProductByOrdersResponse;
 import com.whatap.productservice.presentation.response.ProductCreateResponse;
 import com.whatap.productservice.presentation.response.ProductDetailResponse;
 import com.whatap.productservice.presentation.response.ProductResponse;
@@ -82,5 +85,12 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productDeleteAplService.deleteProduct(new ProductDeleteCommand(id));
+    }
+
+    @PostMapping("/info")
+    public ProductByOrdersResponse getProductsByOrders(@RequestBody @Valid ProductByOrdersRequest request) {
+        List<Product> products = productReadAplService.getProducts(
+            new ProductListByOrdersQuery(request.getProductIds()));
+        return new ProductByOrdersResponse(products);
     }
 }
