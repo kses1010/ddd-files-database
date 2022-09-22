@@ -1,6 +1,6 @@
 package com.whatap.orderservice.presentation.response;
 
-import com.whatap.orderservice.domain.order.Order;
+import com.whatap.orderservice.domain.order.model.OrderDetail;
 import java.time.LocalDateTime;
 import lombok.Getter;
 
@@ -9,17 +9,25 @@ public class OrderDetailResponse {
 
     private final Long id;
     private final Long productId;
-    private final LocalDateTime createdAt;
+    private final String productName;
+    private final String productDescription;
+    private final LocalDateTime orderedTime;
 
-    public OrderDetailResponse(Long id, Long productId, LocalDateTime createdAt) {
+    public OrderDetailResponse(Long id, Long productId, String productName, String productDescription,
+        LocalDateTime orderedTime) {
         this.id = id;
         this.productId = productId;
-        this.createdAt = createdAt;
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.orderedTime = orderedTime;
     }
 
-    public OrderDetailResponse(Order order) {
-        this.id = order.getId();
-        this.productId = order.getProductId();
-        this.createdAt = order.getCreatedAt();
+
+    public OrderDetailResponse(OrderDetail orderDetail) {
+        this.id = orderDetail.getId();
+        this.productId = orderDetail.getProductId();
+        this.productName = orderDetail.getProductName();
+        this.productDescription = orderDetail.getProductDescription();
+        this.orderedTime = orderDetail.getOrderedTime();
     }
 }

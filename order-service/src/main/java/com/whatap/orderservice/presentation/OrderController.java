@@ -10,6 +10,7 @@ import com.whatap.orderservice.application.command.OrderUpdateCommand;
 import com.whatap.orderservice.application.query.OrderDetailQuery;
 import com.whatap.orderservice.application.query.OrderListQuery;
 import com.whatap.orderservice.domain.order.Order;
+import com.whatap.orderservice.domain.order.model.OrderDetail;
 import com.whatap.orderservice.global.pagination.PageQuery;
 import com.whatap.orderservice.global.pagination.PageQueryDto;
 import com.whatap.orderservice.presentation.request.OrderCreateRequest;
@@ -49,8 +50,8 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public OrderDetailResponse getOrderDetail(@PathVariable Long id) {
-        Order order = orderReadAplService.getOrderDetail(new OrderDetailQuery(id));
-        return new OrderDetailResponse(order);
+        OrderDetail orderDetail = orderReadAplService.getOrderDetail(new OrderDetailQuery(id));
+        return new OrderDetailResponse(orderDetail);
     }
 
     @GetMapping("/all")
