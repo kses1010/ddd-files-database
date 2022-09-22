@@ -34,36 +34,40 @@ public class OrderReadAplService {
 
     public List<OrderSummary> getAllOrders() {
         List<Order> allOrders = orderRepository.findAll();
+        return getOrderSummary(allOrders);
+    }
+
+    private List<OrderSummary> getOrderSummary(List<Order> orders) {
         List<OrderSummary> orderSummaries = new ArrayList<>();
 
-        if (!allOrders.isEmpty()) {
-            List<Long> productIds = allOrders.stream()
+        if (!orders.isEmpty()) {
+            List<Long> productIds = orders.stream()
                 .map(Order::getProductId)
                 .collect(Collectors.toList());
-            createOrderSummaries(allOrders, orderSummaries, productIds);
+            List<ProductDetail> productDetails = productService.getProducts(productIds);
+
+            Map<Long, ProductDetail> productDetailMap = new HashMap<>();
+            for (ProductDetail productDetail : productDetails) {
+                productDetailMap.put(productDetail.getId(), productDetail);
+            }
+
+            for (Order order : orders) {
+                Long productId = order.getProductId();
+                orderSummaries.add(createOrderSummary(productDetailMap, order, productId));
+            }
         }
         return orderSummaries;
     }
 
-    private void createOrderSummaries(List<Order> orders, List<OrderSummary> orderSummaries, List<Long> productIds) {
-        List<ProductDetail> productDetails = productService.getProducts(productIds);
-
-        Map<Long, ProductDetail> productDetailMap = new HashMap<>();
-        for (ProductDetail productDetail : productDetails) {
-            productDetailMap.put(productDetail.getId(), productDetail);
+    private OrderSummary createOrderSummary(Map<Long, ProductDetail> productDetailMap, Order order, Long productId) {
+        if (!productDetailMap.containsKey(productId)) {
+            return OrderSummary.createNotExistProduct(order);
         }
-
-        for (Order order : orders) {
-            Long productId = order.getProductId();
-            if (!productDetailMap.containsKey(productId)) {
-                orderSummaries.add(OrderSummary.createNotExistProduct(order));
-            } else {
-                orderSummaries.add(OrderSummary.createExistProduct(order, productDetailMap.get(productId)));
-            }
-        }
+        return OrderSummary.createExistProduct(order, productDetailMap.get(productId));
     }
 
-    public List<Order> getOrders(OrderListQuery query) {
-        return orderRepository.findAll(query.getPageQuery());
+    public List<OrderSummary> getOrders(OrderListQuery query) {
+        List<Order> orders = orderRepository.findAll(query.getPageQuery());
+        return getOrderSummary(orders);
     }
 }
