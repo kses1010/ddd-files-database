@@ -1,4 +1,4 @@
-package com.whatap.orderservice.infra.product.dto;
+package com.whatap.orderservice.infra.product.dto.result;
 
 import com.whatap.orderservice.domain.order.model.ProductDetail;
 import java.time.LocalDateTime;
