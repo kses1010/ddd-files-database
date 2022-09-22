@@ -21,7 +21,7 @@ public class ProductRestTemplateService implements ProductService {
     public ProductDetail getProductDetail(Long productId) {
         try {
             ProductResult productResult = restTemplate.getForObject(
-                "http://localhost:8082/products/${productId}",
+                "http://localhost:8082/products/" + productId,
                 ProductResult.class);
             if (productResult == null) {
                 throw new ProductResultNotFoundException();
