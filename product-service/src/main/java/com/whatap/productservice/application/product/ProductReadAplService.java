@@ -1,6 +1,7 @@
 package com.whatap.productservice.application.product;
 
 import com.whatap.productservice.application.product.query.ProductDetailQuery;
+import com.whatap.productservice.application.product.query.ProductListByOrdersQuery;
 import com.whatap.productservice.application.product.query.ProductListQuery;
 import com.whatap.productservice.domain.product.Product;
 import com.whatap.productservice.domain.product.ProductRepository;
@@ -27,5 +28,9 @@ public class ProductReadAplService {
 
     public List<Product> getProducts(ProductListQuery query) {
         return productRepository.findAll(query.getPageQuery());
+    }
+
+    public List<Product> getProducts(ProductListByOrdersQuery query) {
+
     }
 }
