@@ -27,7 +27,8 @@ Product 서비스, Order 서비스를 개발하고 두 개의 서비스를 `Rest
 
 1. 상품 등록
 
-```curl --location --request POST 'http://localhost:8082/products' \
+```
+curl --location --request POST 'http://localhost:8082/products' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name" : "데이터독",
