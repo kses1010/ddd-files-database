@@ -130,3 +130,6 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# MAC .DS_STORE
+*.DS_STORE
